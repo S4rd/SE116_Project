@@ -23,8 +23,6 @@ public abstract class Character implements CharacterActions {
         this.currentHP = setMaxHP();
         this.maxHP = setMaxHP();
 
-
-
     }
 
     public String getTypeOfCharacter() {
@@ -38,8 +36,11 @@ public abstract class Character implements CharacterActions {
     public double getCurrentHP() {
         return currentHP;
     }
-    public double setMaxHP(){
+
+    public double setMaxHP() {
+
         return Math.round(7 * vitality + 2 * strength + 1 * intelligence);
+
     }
 
     public void setCurrentHP(double currentHP) {
@@ -49,8 +50,6 @@ public abstract class Character implements CharacterActions {
     public double getMaxHP() {
         return maxHP;
     }
-
-
 
 
     public String getNameOfCharacter() {
@@ -68,6 +67,7 @@ public abstract class Character implements CharacterActions {
     public void setCurrentWeight(int currentWeight) {
         this.currentWeight = currentWeight;
     }
+
     public ArrayList<Item> getInventory() {
         return inventory;
     }
@@ -83,7 +83,6 @@ public abstract class Character implements CharacterActions {
     public void setCurrentWeapon(Weapon currentWeapon) {
         this.currentWeapon = currentWeapon;
     }
-
 
 
     public double getStrength() {
@@ -111,8 +110,6 @@ public abstract class Character implements CharacterActions {
     }
 
 
-
-
     @Override
     public void pick(Item item) {
 
@@ -134,19 +131,42 @@ public abstract class Character implements CharacterActions {
     public void wield(Weapon weapon) {
         if (inventory.contains(weapon)) {
             inventory.remove(weapon);
-            currentWeapon=weapon;
+            currentWeapon = weapon;
 
-        } else if(!inventory.contains(weapon)){
-            System.out.println("You have weapon already.");
+        } else if (!inventory.contains(weapon)) {
+            System.out.println("You have not weapon");
 
         }
     }
 
     @Override
-    public void attack(Character attacker,Character enemy) {
-        double dmg=(attacker.getStrength())*(getCurrentWeapon().getValue());
-        double updatedHp = enemy.getCurrentHP()-dmg;
-        enemy.setCurrentHP(updatedHp);
+    public void attack(Character attacker, Character enemy) { //armor varsa hpsinin bir kısmını iade ediyoruz.
+        //if(currentArmor.getArmorType().equals("Armor")){ //
+        double dmg;
+        double updatedHp;
+        if(attacker.currentWeapon==null){
+            dmg = attacker.getStrength(); // punch?
+            updatedHp = enemy.getCurrentHP() - dmg;
+            enemy.setCurrentHP(updatedHp);
+        }
+        else if(attacker.currentWeapon.getWeaponType().equals("Sword")) {
+            dmg = (attacker.getStrength()) * (getCurrentWeapon().getValue());
+            updatedHp = enemy.getCurrentHP() - dmg;
+            enemy.setCurrentHP(updatedHp);
+        }
+        else if(attacker.currentWeapon.getWeaponType().equals("Shield")){
+            dmg = (attacker.getVitality()) * (getCurrentWeapon().getValue());
+            updatedHp = enemy.getCurrentHP() - dmg;
+            enemy.setCurrentHP(updatedHp);
+
+        }
+        else if(attacker.currentWeapon.getWeaponType().equals("Wand")){
+            dmg = (attacker.getIntelligence()) * (getCurrentWeapon().getValue());
+            updatedHp = enemy.getCurrentHP() - dmg;
+            enemy.setCurrentHP(updatedHp);
+
+        }
+
 
     }
 
@@ -159,10 +179,10 @@ public abstract class Character implements CharacterActions {
         }
 
 
-
     }
+
     @Override
-    public void dropInventory(Item item){
+    public void dropInventory(Item item) {
 
     }
 

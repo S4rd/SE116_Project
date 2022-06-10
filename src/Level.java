@@ -8,6 +8,9 @@ public class Level {
 
 
     }
+    public void level(){
+
+    }
 
     
 

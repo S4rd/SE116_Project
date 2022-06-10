@@ -9,6 +9,7 @@ public abstract class Item {
         this.name = name;
         this.weight = weight;
         this.value = value;
+
     }
 
     public void specialAction(){
