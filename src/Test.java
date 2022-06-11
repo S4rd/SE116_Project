@@ -1,6 +1,3 @@
-
-import jdk.swing.interop.SwingInterOpUtils;
-
 import java.util.*;
 
 
@@ -846,13 +843,13 @@ public class Test {
                             }
                             break;
                         case "heal":
-                            if (fighter.getCurrentHP() > 0 && fighter.getCurrentWeapon().getWeaponType().equals("Wand")) {
+                            if (fighter.getCurrentHP() > 0 && fighter.getCurrentWeapon().getItemType().equals("Wand")) {
                                 System.out.println("Type '1' to heal a character with Kane's " + fighter.getCurrentWeapon().getName());
                             }
-                            if (tank.getCurrentHP() > 0 && tank.getCurrentWeapon().getWeaponType().equals("Wand")) {
+                            if (tank.getCurrentHP() > 0 && tank.getCurrentWeapon().getItemType().equals("Wand")) {
                                 System.out.println("Type '2' to heal a character with Braum's " + tank.getCurrentWeapon().getName());
                             }
-                            if (healer.getCurrentHP() > 0 && healer.getCurrentWeapon().getWeaponType().equals("Wand")) {
+                            if (healer.getCurrentHP() > 0 && healer.getCurrentWeapon().getItemType().equals("Wand")) {
                                 System.out.println("Type '3' to heal a character with Sona's " + healer.getCurrentWeapon().getName());
                             }
                             int choice6 = scanner.nextInt();

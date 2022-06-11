@@ -5,9 +5,7 @@ public abstract class Weapon extends Item {
         super(name,weight,value);
     }
 
-    public String getWeaponType() {
-        return weaponType;
-    }
+
 
     public void setWeaponType(String weaponType) {
         this.weaponType = weaponType;

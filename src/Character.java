@@ -303,16 +303,19 @@ public abstract class Character implements CharacterActions {
 
     @Override
     public void dropInventory(Item item) { // currentWeapon silme!
-
-        if (inventory.contains(item)) {
-            inventory.remove(item);
-
-
-
+        if (currentWeapon == null) {
+            System.out.println("You don't have a weapon!");
         } else {
-            System.out.println("You don't have this item!");
-        }
+            if (inventory.contains(item)) {
+                inventory.remove(item);
 
+
+
+            } else {
+                System.out.println("You don't have this item!");
+            }
+
+        }
     }
 
     @Override
