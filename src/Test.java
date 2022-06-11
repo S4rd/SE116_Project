@@ -177,6 +177,7 @@ public class Test {
                     switch (choice) {
                         case "attack":
 
+
                             if (fighter.getCurrentHP() > 0) {
                                 System.out.println("Type '1' for select Kane");
                             }
@@ -188,8 +189,10 @@ public class Test {
                             }
 
 
+
                             int choice1 = scanner.nextInt();
                             scanner.nextLine();
+
 
                             switch (choice1) {
                                 case 1:
@@ -216,7 +219,7 @@ public class Test {
                                         }
 
                                         fighter.attack(fighter, allCharacters.get(indexOfCharacter));
-                                        //System.out.println(fighter.getNameOfCharacter() + " does " + fighter.getStrength() * fighter.getCurrentWeapon().getValue() + " damage.");
+
 
 
                                         if (allyArrayList.contains(allCharacters.get(indexOfCharacter))) {
@@ -240,7 +243,6 @@ public class Test {
 
 
                                                 }
-
 
 
                                                 allyArrayList.remove(allCharacters.get(indexOfCharacter));
@@ -279,6 +281,7 @@ public class Test {
                                         System.out.println(fighter.getNameOfCharacter() + " is dead. You can't attack with " + fighter.getNameOfCharacter() + "!");
                                     }
                                     break;
+
 
                                 case 2:
                                     if (tank.getCurrentHP() > 0) {
@@ -467,6 +470,9 @@ public class Test {
                                                 control1 = false;
                                                 break;
                                             }
+                                            else {
+                                                System.out.println("You don't have this item, try again!");
+                                            }
 
                                         }
                                         if (control1 == true) {
@@ -488,7 +494,7 @@ public class Test {
                                         String pickedItem1 = scanner.nextLine();
                                         for (int a = 0; a < dropList.size(); a++) {
                                             if (dropList.get(a).getName().equals(pickedItem1)) {
-                                                healer.sendInventory(dropList.get(a));
+                                                tank.sendInventory(dropList.get(a));
                                             }
                                         }
                                     } else {
@@ -505,7 +511,7 @@ public class Test {
                                         String pickedItem2 = scanner.nextLine();
                                         for (int a = 0; a < dropList.size(); a++) {
                                             if (dropList.get(a).getName().equals(pickedItem2)) {
-                                                tank.sendInventory(dropList.get(a));
+                                                healer.sendInventory(dropList.get(a));
                                             }
                                         }
                                     } else {
@@ -536,7 +542,7 @@ public class Test {
                             switch (choice3) {
                                 case 1:
                                     if (fighter.getCurrentHP() > 0) {
-                                        if ((fighter.getCurrentWeapon() == null)) {
+                                        if ((fighter.getCurrentWeapon() == null) || fighter.getCurrentArmor() == null) {
                                             for (int a = 0; a < fighter.getInventory().size(); a++) {
                                                 System.out.println("Name: " + fighter.getInventory().get(a).getName() + "\nWeight:" + fighter.getInventory().get(a).getWeight() + "\nDamage or Protection: " +
                                                         fighter.getInventory().get(a).getValue());
@@ -548,7 +554,7 @@ public class Test {
                                             for (int a = 0; a < fighter.getInventory().size(); a++) {
                                                 if (fighter.getInventory().get(a).getName().equals(wieldedItem)) {
                                                     fighter.wield(fighter.getInventory().get(a));
-                                                    System.out.println(fighter.getNameOfCharacter() + " wielded " + fighter.getInventory().get(a).getName());
+
                                                     control = false;
                                                     break;
                                                 }
@@ -560,7 +566,7 @@ public class Test {
 
                                             }
                                         } else {
-                                            System.out.println("You have weapon already!");
+                                            System.out.println("You have weapon or armor already!");
                                         }
                                     } else {
                                         System.out.println(fighter.getNameOfCharacter() + " is dead. You can't wield for " + fighter.getNameOfCharacter() + "!");
@@ -582,7 +588,7 @@ public class Test {
                                             for (int a = 0; a < tank.getInventory().size(); a++) {
                                                 if (tank.getInventory().get(a).getName().equals(wieldedItem)) {
                                                     tank.wield(tank.getInventory().get(a));
-                                                    System.out.println(tank.getNameOfCharacter() + " wielded " + tank.getInventory().get(a).getName());
+
                                                     control = false;
                                                     break;
                                                 }
@@ -615,7 +621,7 @@ public class Test {
                                             for (int a = 0; a < healer.getInventory().size(); a++) {
                                                 if (healer.getInventory().get(a).getName().equals(wieldedItem)) {
                                                     healer.wield(fighter.getInventory().get(a));
-                                                    System.out.println(healer.getNameOfCharacter() + " wielded " + healer.getInventory().get(a).getName());
+
                                                     control = false;
                                                     break;
                                                 }

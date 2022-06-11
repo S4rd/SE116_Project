@@ -146,6 +146,7 @@ public abstract class Character implements CharacterActions {
                     System.out.println("You need take off your armor!");
                 } else {
                     currentArmor = (Armor) item;
+                    System.out.println(nameOfCharacter+" is wielded "+currentArmor.getName());
                 }
             } else if (item.getItemType().equals("Sword") || item.getItemType().equals("Wand") || item.getItemType().equals("Shield")) {
                 if (!(currentWeapon == null)) {
@@ -153,6 +154,8 @@ public abstract class Character implements CharacterActions {
                     System.out.println("You need drop your weapon!");
                 } else {
                     currentWeapon = (Weapon) item;
+                    System.out.println(nameOfCharacter+" is wielded "+currentWeapon.getName());
+
 
                 }
             } else if (!inventory.contains(item)) {
@@ -302,21 +305,31 @@ public abstract class Character implements CharacterActions {
     }
 
     @Override
-    public void dropInventory(Item item) { // currentWeapon silme!
-        if (currentWeapon == null) {
-            System.out.println("You don't have a weapon!");
-        } else {
+    public void dropInventory(Item item) {
+
+
             if (inventory.contains(item)) {
-                inventory.remove(item);
+                if (item == currentWeapon && !(currentWeapon == null)) {
+                    inventory.remove(item);
+                    currentWeapon = null;
 
 
 
+                }
+                else if(item == currentArmor && !(currentArmor == null)){
+                    inventory.remove(item);
+                    currentArmor = null;
+
+                }
             } else {
                 System.out.println("You don't have this item!");
+
+
             }
 
+
         }
-    }
+
 
     @Override
     public void heal(Character healer,Character healed) {
