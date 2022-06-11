@@ -3,6 +3,7 @@ public abstract class Item {
     private String name;
     private double weight;
     private double value;
+    private String itemType;
 
 
     public Item(String name, double weight, double value) {
@@ -10,8 +11,17 @@ public abstract class Item {
         this.weight = weight;
         this.value = value;
 
+
+
     }
 
+    public String getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+    }
 
     public String getName() {
         return name;

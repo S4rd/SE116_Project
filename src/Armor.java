@@ -1,17 +1,11 @@
 public class Armor extends Item {
 
-    private String armorType;
+
 
     public Armor(String name, double weight,double value) {
         super(name,weight,value);
-        setArmorType("Armor");
+        setItemType("Armor");
     }
 
-    public String getArmorType() {
-        return armorType;
-    }
 
-    public void setArmorType(String armorType) {
-        this.armorType = armorType;
-    }
 }
