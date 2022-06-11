@@ -1,21 +1,17 @@
 public abstract class Item {
 
     private String name;
-    private int weight;
+    private double weight;
     private double value;
 
 
-    public Item(String name, int weight, double value) {
+    public Item(String name, double weight, double value) {
         this.name = name;
         this.weight = weight;
         this.value = value;
 
     }
 
-    public void specialAction(){
-
-
-    }
 
     public String getName() {
         return name;
@@ -25,11 +21,11 @@ public abstract class Item {
         this.name = name;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
@@ -37,7 +33,7 @@ public abstract class Item {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

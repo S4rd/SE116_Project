@@ -2,7 +2,6 @@ import java.util.*;
 import java.lang.*;
 
 public abstract class Character implements CharacterActions {
-
     private String nameOfCharacter;
     private double strength;
     private double vitality;
@@ -11,9 +10,10 @@ public abstract class Character implements CharacterActions {
     private double currentHP;
     private Weapon currentWeapon;
     private Armor currentArmor;
-    private int currentWeight;
+    private double currentWeight;
     private String typeOfCharacter;
     private ArrayList<Item> inventory = new ArrayList<Item>();
+
 
     public Character(String nameOfCharacter, double strength, double vitality, double intelligence) {
         this.nameOfCharacter = nameOfCharacter;
@@ -22,7 +22,21 @@ public abstract class Character implements CharacterActions {
         this.intelligence = intelligence;
         this.currentHP = setMaxHP();
         this.maxHP = setMaxHP();
+        setInventory(inventory);
+        setCurrentWeight(0);
 
+    }
+
+    public void setCurrentWeight(double currentWeight) {
+        this.currentWeight = currentWeight;
+    }
+
+    public Armor getCurrentArmor() {
+        return currentArmor;
+    }
+
+    public void setCurrentArmor(Armor currentArmor) {
+        this.currentArmor = currentArmor;
     }
 
     public String getTypeOfCharacter() {
@@ -111,78 +125,164 @@ public abstract class Character implements CharacterActions {
 
 
     @Override
-    public void pick(Item item) {
+    public void sendInventory(Item item) {
 
-        if (getCurrentWeight() >= getStrength()) {
-            System.out.println("The inventory is full!!!");
+        if (getCurrentWeight() + item.getWeight() > getStrength()) {
+            System.out.println("The inventory is full, you need drop an item!");
         } else {
+            System.out.println(nameOfCharacter+" picked an "+item.getName());
             inventory.add(item);
+            currentWeight += item.getWeight();
         }
     }
 
-    @Override
-    public void wear(Armor armor) {
-
-        //??
-
-    }
 
     @Override
-    public void wield(Weapon weapon) {
-        if (inventory.contains(weapon)) {
-            inventory.remove(weapon);
-            currentWeapon = weapon;
+    public void wield(Item item) {
+        if (inventory.contains(item)) {
+            if (!(currentWeapon == null)) {
 
-        } else if (!inventory.contains(weapon)) {
-            System.out.println("You have not weapon");
+                System.out.println("You need drop your weapon!");
+            }
+            else {
+                currentWeapon = (Weapon) item;
+
+            }
+        } else if (!inventory.contains(item)) {
+            System.out.println("You don't have this weapon!");
 
         }
     }
 
     @Override
     public void attack(Character attacker, Character enemy) { //armor varsa hpsinin bir kısmını iade ediyoruz.
-        //if(currentArmor.getArmorType().equals("Armor")){ //
-        double dmg;
-        double updatedHp;
-        if(attacker.currentWeapon==null){
-            dmg = attacker.getStrength(); // punch?
-            updatedHp = enemy.getCurrentHP() - dmg;
-            enemy.setCurrentHP(updatedHp);
-        }
-        else if(attacker.currentWeapon.getWeaponType().equals("Sword")) {
-            dmg = (attacker.getStrength()) * (getCurrentWeapon().getValue());
-            updatedHp = enemy.getCurrentHP() - dmg;
-            enemy.setCurrentHP(updatedHp);
-        }
-        else if(attacker.currentWeapon.getWeaponType().equals("Shield")){
-            dmg = (attacker.getVitality()) * (getCurrentWeapon().getValue());
-            updatedHp = enemy.getCurrentHP() - dmg;
-            enemy.setCurrentHP(updatedHp);
 
+        if (enemy.currentArmor == null) {
+            double dmg;
+            double updatedHp;
+
+            if (attacker.currentWeapon == null) {
+                dmg = attacker.getStrength();
+                updatedHp = enemy.getCurrentHP() - dmg;
+                enemy.setCurrentHP(updatedHp);
+            } else if (attacker.currentWeapon.getWeaponType().equals("Sword")) {
+                dmg = (attacker.getStrength()) * (getCurrentWeapon().getValue());
+                updatedHp = enemy.getCurrentHP() - dmg;
+                enemy.setCurrentHP(updatedHp);
+            } else if (attacker.currentWeapon.getWeaponType().equals("Shield")) {
+                dmg = (attacker.getVitality()) * (getCurrentWeapon().getValue());
+                updatedHp = enemy.getCurrentHP() - dmg;
+                enemy.setCurrentHP(updatedHp);
+
+            } else if (attacker.currentWeapon.getWeaponType().equals("Wand")) {
+                dmg = (attacker.getIntelligence()) * (getCurrentWeapon().getValue());
+                updatedHp = enemy.getCurrentHP() - dmg;
+                enemy.setCurrentHP(updatedHp);
+
+            }
+
+
+        } else if (!(enemy.currentArmor == null)) {
+            double dmg;
+            double updatedHp;
+            if (enemy.currentArmor.getName().equals("Light Armor")) {
+                if (attacker.currentWeapon == null) {
+                    dmg = attacker.getStrength();
+                    double reducedDmg = dmg * currentArmor.getValue();
+                    updatedHp = enemy.getCurrentHP() - reducedDmg;
+                    enemy.setCurrentHP(updatedHp);
+                } else if (attacker.currentWeapon.getWeaponType().equals("Sword")) {
+                    dmg = (attacker.getStrength()) * (getCurrentWeapon().getValue());
+                    double reducedDmg = dmg * currentArmor.getValue();
+                    updatedHp = enemy.getCurrentHP() - reducedDmg;
+                    enemy.setCurrentHP(updatedHp);
+                } else if (attacker.currentWeapon.getWeaponType().equals("Shield")) {
+                    dmg = (attacker.getVitality()) * (getCurrentWeapon().getValue());
+                    double reducedDmg = dmg * currentArmor.getValue();
+                    updatedHp = enemy.getCurrentHP() - reducedDmg;
+                    enemy.setCurrentHP(updatedHp);
+
+                } else if (attacker.currentWeapon.getWeaponType().equals("Wand")) {
+                    dmg = (attacker.getIntelligence()) * (getCurrentWeapon().getValue());
+                    double reducedDmg = dmg * currentArmor.getValue();
+                    updatedHp = enemy.getCurrentHP() - reducedDmg;
+
+                    enemy.setCurrentHP(updatedHp);
+
+                }
+            } else if (enemy.currentArmor.getName().equals("Medium Armor")) {
+
+                if (attacker.currentWeapon == null) {
+                    dmg = attacker.getStrength();
+                    double reducedDmg = dmg * currentArmor.getValue();
+                    updatedHp = enemy.getCurrentHP() - reducedDmg;
+                    enemy.setCurrentHP(updatedHp);
+                } else if (attacker.currentWeapon.getWeaponType().equals("Sword")) {
+                    dmg = (attacker.getStrength()) * (getCurrentWeapon().getValue());
+                    double reducedDmg = dmg * currentArmor.getValue();
+                    updatedHp = enemy.getCurrentHP() - reducedDmg;
+                    enemy.setCurrentHP(updatedHp);
+                } else if (attacker.currentWeapon.getWeaponType().equals("Shield")) {
+                    dmg = (attacker.getVitality()) * (getCurrentWeapon().getValue());
+                    double reducedDmg = dmg * currentArmor.getValue();
+                    updatedHp = enemy.getCurrentHP() - reducedDmg;
+                    enemy.setCurrentHP(updatedHp);
+
+                } else if (attacker.currentWeapon.getWeaponType().equals("Wand")) {
+                    dmg = (attacker.getIntelligence()) * (getCurrentWeapon().getValue());
+                    double reducedDmg = dmg * currentArmor.getValue();
+                    updatedHp = enemy.getCurrentHP() - reducedDmg;
+                    enemy.setCurrentHP(updatedHp);
+
+                }
+
+            } else if (enemy.currentArmor.getName().equals("Heavy Armor")) {
+                if (attacker.currentWeapon == null) {
+                    dmg = attacker.getStrength();
+                    double reducedDmg = dmg * currentArmor.getValue();
+                    updatedHp = enemy.getCurrentHP() - reducedDmg;
+                    enemy.setCurrentHP(updatedHp);
+                } else if (attacker.currentWeapon.getWeaponType().equals("Sword")) {
+                    dmg = (attacker.getStrength()) * (getCurrentWeapon().getValue());
+                    double reducedDmg = dmg * currentArmor.getValue();
+                    updatedHp = enemy.getCurrentHP() - reducedDmg;
+                    enemy.setCurrentHP(updatedHp);
+                } else if (attacker.currentWeapon.getWeaponType().equals("Shield")) {
+                    dmg = (attacker.getVitality()) * (getCurrentWeapon().getValue());
+                    double reducedDmg = dmg * currentArmor.getValue();
+                    updatedHp = enemy.getCurrentHP() - reducedDmg;
+                    enemy.setCurrentHP(updatedHp);
+
+                } else if (attacker.currentWeapon.getWeaponType().equals("Wand")) {
+                    dmg = (attacker.getIntelligence()) * (getCurrentWeapon().getValue());
+                    double reducedDmg = dmg * currentArmor.getValue();
+                    updatedHp = enemy.getCurrentHP() - reducedDmg;
+                    enemy.setCurrentHP(updatedHp);
+
+                }
+            }
         }
-        else if(attacker.currentWeapon.getWeaponType().equals("Wand")){
-            dmg = (attacker.getIntelligence()) * (getCurrentWeapon().getValue());
-            updatedHp = enemy.getCurrentHP() - dmg;
-            enemy.setCurrentHP(updatedHp);
-
-        }
-
-
     }
+
 
     @Override
     public void examine(Item item) {
         if (inventory.contains(item)) {
-            // arraylist yazdırılırken sırayla yazdırılacak, bu sayede bu metotta girilen sayıya göre itemin bilgilerini çıkarırız.
+            System.out.println("Name: " + item.getName() + "\n Weight: " + item.getWeight() + "\n Damage or Protection: " + item.getValue());
 
-
+        } else {
+            System.out.println("You don't have this item!");
         }
-
-
     }
 
     @Override
     public void dropInventory(Item item) {
+        if (inventory.contains(item)) {
+            inventory.remove(item);
+
+        } else {
+            System.out.println("You don't have this item!");
+        }
 
     }
 

@@ -2,8 +2,8 @@ public class Armor extends Item {
 
     private String armorType;
 
-    public Armor(String name, int weight, double value) {
-        super(name, weight, value);
+    public Armor(String name, double weight,double value) {
+        super(name,weight,value);
         setArmorType("Armor");
     }
 

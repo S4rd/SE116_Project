@@ -1,7 +1,7 @@
 public class Shield extends Weapon {
 
 
-    public Shield(String name, int weight, int value){
+    public Shield(String name, double weight, double value){
         super(name,weight,value);
         setWeaponType("Shield");
     }
